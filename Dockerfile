@@ -1,11 +1,14 @@
-FROM adoptopenjdk/openjdk11
-    
+# Use Eclipse Temurin JRE 21
+FROM eclipse-temurin:21-jre
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Spring Boot JAR
+COPY target/*.jar app.jar
+
+# Expose the application port
 EXPOSE 8080
- 
-ENV APP_HOME /usr/src/app
 
-COPY target/*.jar $APP_HOME/app.jar
-
-WORKDIR $APP_HOME
-
-CMD ["java", "-jar", "app.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
