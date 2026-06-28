@@ -2,20 +2,23 @@ package com.javaproject.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import jakarta.servlet.ServletException;
 
 import java.io.IOException;
 
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
+
+@Component
 public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
-                       AccessDeniedException ex) throws IOException {
+                       AccessDeniedException accessDeniedException)
+            throws IOException, ServletException {
 
-        response.setStatus(403);
-        response.getWriter().write("Access Denied: " + ex.getMessage());
+        response.sendRedirect("/access-denied");
     }
 }
